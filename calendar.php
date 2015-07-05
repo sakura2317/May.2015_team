@@ -77,8 +77,16 @@
 		array_push($n , "{$k}");
 		
 	}
+	$red  = "bgcolor = '#ff0000'";
+	$blue = "bgcolor = '#0000ff'";
 	foreach($n as $key => $val){
-		print "<td class = {$key} > {$val} </td>";
+		print "<td class = {$key} ";
+		if($key % 7 == 0){
+			print $red;
+		}else if($key % 7 == 6){
+			print $blue;
+		}
+		print "> {$val} </td>";
 		if($key == 6){
 			print "</tr>";
 		}else if(($key + 1) % 7 == 0 ){
