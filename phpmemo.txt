@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>PHPメモ？辞書？</title>
+</head>
+
+<body>
+<?php
+/*--------------------------関数・開--------------------------*/
+print_r($配列名);
+	配列をすべて表示する
+printf("%.1f","数値");
+	数値を小数点第一位まで表示する
+sprintf("%.1f","数値");
+	数値を小数点第一位まで返す
+max($配列);
+	配列内で最も大きい数値を返す
+sort($配列);
+	配列の要素を昇順に並び替える(キーが数字になる)
+asort($配列);
+	配列の要素を昇順に並び替える(キーは変わらない)
+rsort($配列);
+	配列の要素を降順に並び替える(キーは変わらない)
+ksort($配列)
+	配列のキーを昇順に並び替える
+arsort($配列);
+	配列の要素を降順に並び替える(キーは変わらない)
+krsort($配列);
+	配列のキーを降順に並び替える
+setcookie("user" , $_POST['user'], mktime(0 , 0 , 0 , 5 , 1 , 2016));
+	クッキーを設定する("キー" , "要素" , 賞味期限)
+setcookie("user" , "");
+	指定したキーのクッキーを削除
+$_COOKIE['']
+	クッキー呼び出し
+$_POST['']
+	ポスト呼び出し
+$_GET['']
+	ゲット呼び出し
+
+
+
+//判定
+	$value = "不可";
+	if($score >= 80){
+		$value = "優";
+	}else if($score >= 70){
+		$value = "良";
+	}else if($score >= 60){
+		$value = "可";
+	}
+//合計点、平均点演算
+	$kokugo = array(52 , 69 , 74 , 95 , 41);
+	function sum($mat){
+		$sum = 0;
+		for( $i = 0 ; $i < count($mat) ; $i++){
+			$sum += $mat[$i];
+		}
+	return $sum;
+	}
+	function ave($ave){
+		/*$sum = 0;
+		for( $i = 0 ; $i < count($ave) ; $i++){
+			$sum += $ave[$i];
+		}
+		*/
+	return sum($ave) / count($ave);
+		
+	}
+	
+	echo "合計点：" . sum($kokugo);
+	echo "<br>";
+	echo "平均点：" . ave($kokugo);
+
+
+/*--------------------------関数・終--------------------------*/
+
+
+
+
+/*--------------------------PHPでcsvファイルを読み込む・開--------------------------*/
+	$fp = fopen(".csv","r");
+//feof()は使わないほうがいいらしい
+	while(!feof($fp)){
+//1行ずつ読み込んで$statに都度いれる		
+		$stat = fgetcsv($fp);
+		print_r($stat);
+		print "<br>";
+	}
+	fclose($fp);
+/*--------------------------PHPでcsvファイルを読み込む・終--------------------------*/
+
+
+
+
+
+
+
+/*--------------------------SQLをPHPで操作する・始--------------------------*/
+//サーバー名/phpadminも使える
+echo <<<EOM
+//SQLデータベースへPHPからアクセスする
+//if(isset(\_POST['']))とかも有用
+	$USER    = "ID名" ;     
+	$PW      = "パスワード";
+	$dnsinfo = "mysql : dbname= {$USER} ;host = localhost:80とか ; charset = utf8";
+		try{
+				$pdo = new PDO($dnsinfo,$USER,$PW);
+				$res = "接続しました";
+		}catch(PDOException $e){
+			$res = $e -> getMessage();
+		}
+		echo $res;
+		echo "<br>";
+	}
+//SQLデータベースへレコード追加
+	$sql = "INSERT INTO goods VALUES(? , ? , ?)";
+//SQLデータベースのレコード取得
+	$sql = "SELECT * FROM goods ";
+//SQLデータベースのレコード削除
+	$sql = "DELETE FROM goods WHERE GoodsID = ?";
+//SQLデータベースのレコード更新
+	$sql = "UPDATE goods SET Price = ? WHERE GoodsID = ?";
+
+//Webページからデータベースへレコードを追加するフォーム
+	<form action = "" method = "post">
+	<label>GoodsID  <input type = "text" name = "GoodsID"   size = "20" ></label>
+	<label>GoodsName<input type = "text" name = "GoodsName" size = "40" ></label>
+	<label>Price    <input type = "text" name = "Price"     size = "20" ></label>
+	<input type = "submit" name = "insert" value = " 登録 ">
+
+//プルダウン選択
+//ドリームウィーバーでエラーが出るのは不明です。これそのままでカエル教科書5-3は正常動作しました。
+	$sql = "SELECT GoodsID , GoodsName FROM goods";
+	$stmt = $pdo -> prepare($sql);
+	$stmt -> execute(null);
+	
+	$selectTag  = "<select name = 'GoodsID'>\n";
+	$selectTag .= "<option value''>選択してください</option>";
+	while($row = $stmt -> fetch(PDO::FETCH_ASSOC)){
+		$selectTag .= "<option value =" . $row['GoodsID'] . ">"
+						 . $row['GoodsName'] . "</option>\n";
+	}
+	$selectTag .= "</select>\n";
+	<form action = "" method = "post">
+		<label>GoodsID<?php echo $selectTag;?></label>
+		<input type = "submit" name = "select" value = " 表示 ">
+	</form>
+
+EOM;
+/*--------------------------SQLをPHPで操作する・終--------------------------*/
+?>
+</body>
+</html>
