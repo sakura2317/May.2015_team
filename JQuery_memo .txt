@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>JavaScriptメモ？辞書？</title>
+<script>
+//必要なリンク
+	<script src = "jquery-1.8.3.min.js" ></script>
+	jquery-1.8.3.min.js//このファイルをカレントディレクトリとかにいれとく
+
+//基本構文
+	$(function(){});
+//セレクタに対してメソッドを実行(引数の中に変更)
+	$('セレクタ') . メソッド;
+/*---------------------------基本メソッド・始---------------------------*/
+//CSSを変更
+	.css()
+
+//HTMLを変更
+	.html()
+
+//属性の値を取得
+	.attr()
+
+//要素を非表示
+	.hide()
+
+//削除
+	.remove()
+
+//要素を探す
+	.find()
+
+//上書き
+	.text()
+
+//追加記入
+	.append()
+
+//フェードアウト(引数は速度)
+	.fadeOut()
+
+//フェードイン(引数は速度)
+	.fadeIn()
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------基本メソッド・終---------------------------*/
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</head>
+
+<body>
+</body>
+</html>

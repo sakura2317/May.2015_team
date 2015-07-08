@@ -89,6 +89,13 @@ $_GET[''];
 	echo "<br>";
 	echo "平均点：" . ave($kokugo);
 
+//関数を他のファイルにして読み込む
+	require_once("ファイル名");
+
+
+
+
+
 
 /*--------------------------関数・終--------------------------*/
 
@@ -165,14 +172,56 @@ $_GET[''];
 	</form>
 
 //フォームで表示はさせるけど操作はさせない
-//あいうの内容をテキストで編集するが、あいうは表示のみ
-<form method="post" action="">
-	<p>あいう</p>
-	<input type = "hidden" name = "あいう" value = "あいう">
-	<input type = "text" name = "なにか" value ="初期値">
-</form>
+	//あいうの内容をテキストで編集するが、あいうは表示のみ
+		<form method="post" action="">
+			<p>あいう</p>
+			<input type = "hidden" name = "あいう" value = "あいう">
+			<input type = "text" name = "なにか" value ="初期値">
+		</form>
 
 /*--------------------------SQLをPHPで操作する・終--------------------------*/
+
+/*--------------------------クラス・終--------------------------*/
+//クラスを作る//
+class DB{
+	private $USER = "i510" ;
+	private $PW   = "May.2015";
+	private $dns  = "mysql:dbname=i510;host=sv1;charset=utf8";
+
+	
+	private function Connectdb(){
+		try{
+			$pdo = new PDO($this -> dns , $this -> USER , $this -> PW);
+			return $pdo;
+		}catch(Exception $e){
+			return false;
+		}
+	}
+	
+	public function executeSQL($sql , $array){
+		try{
+			if(!$pdo = $this -> Connectdb())return false;
+				$stmt = $pdo -> prepare($sql);
+				$stmt -> execute($array);
+				return $stmt;
+		}catch(Exception $e){
+			return false;
+		}
+	}
+}
+
+
+
+//クラスを読み込む
+//変数 = new クラス名();
+//インスタンス変数 -> 関数名(引数);
+//db.phpの中でDB()というクラスを作った
+	require_once("db.php");
+	$db = new DB();
+	$sql = "SELECT * FROM goods";
+	$res = $db -> executesql($sql , null);
+
+/*--------------------------クラス・終--------------------------*/
 ?>
 </body>
 </html>
