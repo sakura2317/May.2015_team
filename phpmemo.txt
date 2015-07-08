@@ -149,6 +149,14 @@ echo <<<EOM
 	</form>
 
 EOM;
+//フォームで表示はさせるけど操作はさせない
+//あいうの内容をテキストで編集するが、あいうは表示のみ
+<form method="post" action="">
+	<p>あいう</p>
+	<input type = "hidden" name = "あいう" value = "あいう">
+	<input type = "text" name = "なにか" value ="初期値">
+</form>
+
 /*--------------------------SQLをPHPで操作する・終--------------------------*/
 ?>
 </body>
